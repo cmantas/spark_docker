@@ -1,0 +1,24 @@
+version: '2' 
+services:
+  datanode:
+    image: hadoop_base
+    container_name: datanode
+    command: /bin/bash -c '/run_datanode.sh && tail -f /dev/null'
+    volumes:
+      - ./data/datanode:/hadoop/dfs/data
+      - ./logs/:/hadoop/logs
+    environment:
+      - CORE_CONF_fs_defaultFS=hdfs://$MASTER:8020
+    env_file:
+      - ./hadoop.env
+    network_mode: "host"
+  spark-slave:
+    image: base_spark
+    container_name: spark-slave
+    environment:
+      - ENABLE_INIT_DAEMON=false
+      - SPARK_MASTER=spark://$MASTER:7077
+    network_mode: "host"
+    volumes:
+      - ./logs:/spark/logs
+    command: /bin/bash -c '/start_slave.sh && tail -f /dev/null'

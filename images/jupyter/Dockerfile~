@@ -1,0 +1,12 @@
+FROM jupyter/scipy-notebook:0b3ec811c968
+
+USER root
+RUN apt-get -yqq update && \
+    apt-get install --no-install-recommends -yqq openjdk-8-jre-headless ca-certificates-java
+
+RUN pip install pyspark==2.2.0.post0
+
+ENV PYSPARK_PYTHON=/home/cmantas/anaconda3/bin/python
+#ENV PYSPARK_DRIVER_PYTHON=/opt/conda/bin/python
+
+

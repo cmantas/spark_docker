@@ -1,0 +1,32 @@
+version: '2' 
+services:
+  namenode:
+    image: hadoop_base
+    container_name: namenode
+    command: /bin/bash -c '/run_namenode.sh'
+    volumes:
+      - ./data/namenode:/hadoop/dfs/name
+      - ./logs/:/hadoop/logs
+    environment:
+      - CLUSTER_NAME=test
+    env_file:
+      - ./hadoop.env
+    network_mode: "host"
+  spark-master:
+    image: base_spark
+    container_name: spark-master
+    environment:
+      -  ENABLE_INIT_DAEMON=false
+    network_mode: "host"
+    command: /bin/bash -c '/spark/sbin/start-master.sh && tail -f /dev/null'
+  jupyter-pyspark:
+     image: jupyter_pyspark
+     container_name: jupyter-pyspark
+     network_mode: "host"
+     command: "start-notebook.sh --NotebookApp.token=''"
+  hdfs-browser:
+    image: gethue/hue:latest
+    ports:
+      - 8088:8888
+    environment:
+      - NAMENODE_HOST=localhost
