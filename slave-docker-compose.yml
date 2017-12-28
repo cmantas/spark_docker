@@ -1,3 +1,7 @@
+# Since a docker container exits after executing the designated command
+# we work around this by adding a command that never exits after that with &&
+# (in this case the command is tail -f /dev/null)
+
 version: '2' 
 services:
   datanode:
@@ -6,11 +10,12 @@ services:
     command: /bin/bash -c '/run_datanode.sh && tail -f /dev/null'
     volumes:
       - ./data/datanode:/hadoop/dfs/data
+      - ./data/shared:/shared
       - ./logs/:/hadoop/logs
     environment:
       - CORE_CONF_fs_defaultFS=hdfs://$MASTER:8020
     env_file:
-      - ./hadoop.env
+      - ./resources/hadoop.env
     network_mode: "host"
   spark-slave:
     image: base_spark
