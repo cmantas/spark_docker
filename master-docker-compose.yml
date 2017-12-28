@@ -30,3 +30,6 @@ services:
     command: /bin/bash -c 'build/env/bin/hue runserver_plus 0.0.0.0:8888'
     #environment:
     #  - NAMENODE_HOST=localhost
+    volumes:
+      - ./logs/:/logs
+    command: /bin/bash -c 'build/env/bin/hue runserver_plus 0.0.0.0:8888 &>/logs/hue.out'
