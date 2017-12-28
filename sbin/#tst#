@@ -1,0 +1,4 @@
+# current script's path
+my_path=$(dirname $(readlink -f $0))
+
+cat $my_path/../resources/hadoop.env
