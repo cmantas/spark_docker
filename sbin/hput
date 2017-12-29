@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 full_path=$(readlink -f $1)
 base_name=$(basename $full_path)
@@ -17,10 +18,10 @@ if [ -d "${full_path}" ] ; then
     # as a volume and call hdfs put from this container
     cf=/shared/$base_name
     docker run -it --rm\
-       --env-file=$hadoop_env
+       --env-file=$hadoop_env\
        --net host \
        --volume $full_path:$cf\
-       hadoop_base \
+       cmantas/hadoop_base \
        hadoop fs -put $cf $2
 
 else
