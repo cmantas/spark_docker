@@ -5,7 +5,7 @@
 version: '2' 
 services:
   datanode:
-    image: hadoop_base
+    image: cmantas/hadoop_base
     container_name: datanode
     command: /bin/bash -c '/run_datanode.sh && tail -f /dev/null'
     volumes:
@@ -18,7 +18,7 @@ services:
       - ./resources/hadoop.env
     network_mode: "host"
   spark-slave:
-    image: base_spark
+    image: cmantas/spark_base
     container_name: spark-slave
     environment:
       - ENABLE_INIT_DAEMON=false

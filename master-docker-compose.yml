@@ -1,7 +1,7 @@
 version: '2'
 services:
   namenode:
-    image: hadoop_base
+    image: cmantas/hadoop_base
     container_name: namenode
     command: /bin/bash -c '/run_namenode.sh'
     volumes:
@@ -13,14 +13,14 @@ services:
       - ./resources/hadoop.env
     network_mode: host
   spark-master:
-    image: base_spark
+    image: cmantas/spark_base
     container_name: spark-master
     environment:
       -  ENABLE_INIT_DAEMON=false
     network_mode: host
     command: /bin/bash -c '/spark/sbin/start-master.sh && tail -f /dev/null'
   jupyter-pyspark:
-     image: jupyter_pyspark
+     image: cmantas/jupyter_pyspark
      container_name: jupyter-pyspark
      network_mode: host
      command: /bin/bash -c 'start-notebook.sh --NotebookApp.token="" --port=8889'
@@ -29,4 +29,4 @@ services:
     network_mode: host
     volumes:
       - ./logs/:/logs
-    command: /bin/bash -c 'build/env/bin/hue runserver_plus 0.0.0.0:8888 &>/logs/hue.out'
+    command: /bin/bash -c 'echo Starting && build/env/bin/hue runserver_plus 0.0.0.0:8888 &>/logs/hue.out'
