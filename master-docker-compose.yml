@@ -16,7 +16,8 @@ services:
     image: cmantas/spark_base
     container_name: spark-master
     environment:
-      -  ENABLE_INIT_DAEMON=false
+      - ENABLE_INIT_DAEMON=false
+      - SPARK_MASTER_HOST=$MASTER
     network_mode: host
     command: /bin/bash -c '/spark/sbin/start-master.sh && tail -f /dev/null'
   jupyter-pyspark:
