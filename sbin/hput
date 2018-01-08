@@ -22,7 +22,7 @@ if [ -d "${full_path}" ] ; then
        --net host \
        --volume $full_path:$cf\
        cmantas/hadoop_base \
-       hadoop fs -put $cf $2
+       hadoop dfs -Ddfs.replication=1 -put $cf $2
 
 else
     if [ -f "${full_path}" ]; then
@@ -31,7 +31,7 @@ else
         # hard link file
         ln $full_path $shared/$base_name
         # put to hdfs
-        docker exec -it  datanode hadoop fs -put /shared/$base_name $2
+        docker exec -it  datanode hadoop dfs -Ddfs.replication=1 -put /shared/$base_name $2
         # remove hard link
         rm $shared/$base_name
     else
