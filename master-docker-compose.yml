@@ -9,6 +9,8 @@ services:
       - ./logs/:/hadoop/logs
     environment:
       - CLUSTER_NAME=test
+      - HDFS_REPLICATION=1
+      - HDFS_BLOCKSIZE=128m
     env_file:
       - ./resources/hadoop.env
     network_mode: host
