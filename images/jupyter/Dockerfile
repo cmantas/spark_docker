@@ -6,7 +6,4 @@ RUN apt-get -yqq update && \
 
 RUN pip install pyspark==2.2.0.post0
 
-#ENV PYSPARK_PYTHON=/home/cmantas/anaconda3/bin/python
-#ENV PYSPARK_DRIVER_PYTHON=/opt/conda/bin/python
-
-
+ENV PYSPARK_SUBMIT_ARGS='--packages org.mariadb.jdbc:mariadb-java-client:1.1.7 pyspark-shell'
