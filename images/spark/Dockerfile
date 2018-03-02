@@ -24,3 +24,9 @@ RUN cd /
 ENV PYTHONHASHSEED 1
 
 COPY start_slave.sh /
+
+RUN wget -o /spark/jars/mariadb-java-client-2.2.1.jar https://downloads.mariadb.com/Connectors/java/connector-java-2.2.1/mariadb-java-client-2.2.1.jar
+
+RUN cp /spark/conf/spark-defaults.conf.template /spark/conf/spark-defaults.conf
+RUN echo 'spark.driver.extraClassPath /spark/jars/mariadb-java-client-2.2.1.jar' >> /spark/conf/spark-defaults.conf
+RUN echo 'spark.executor.extraClassPath /spark/jars/mariadb-java-client-2.2.1.jar' >> /spark/conf/spark-defaults.conf
