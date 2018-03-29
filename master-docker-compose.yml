@@ -27,6 +27,8 @@ services:
      container_name: jupyter-pyspark
      network_mode: host
      command: /bin/bash -c 'start-notebook.sh --NotebookApp.token="" --port=8889'
+     volumes:
+        - ./notebooks:/home/jovyan
   hdfs-browser:
     image: gethue/hue:latest
     network_mode: host
