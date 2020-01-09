@@ -5,7 +5,7 @@ RUN apt-get install -yqq --no-install-recommends openjdk-8-jdk net-tools curl
 
 ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/
 
-ENV HADOOP_VERSION 2.7.5
+ENV HADOOP_VERSION 2.7.7
 ENV HADOOP_URL https://www.apache.org/dist/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz
 
 RUN curl -fSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz
@@ -32,7 +32,6 @@ HEALTHCHECK CMD curl -f http://localhost:50070/ || exit 1
 
 ENV HDFS_CONF_dfs_namenode_name_dir=file:///hadoop/dfs/name
 ENV HDFS_CONF_dfs_datanode_data_dir=file:///hadoop/dfs/data
-
 
 VOLUME ["/hadoop/dfs/name", "/hadoop/dfs/data", "/hadoop/logs"]
 
